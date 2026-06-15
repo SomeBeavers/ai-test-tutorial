@@ -1879,3 +1879,6 @@ node_modules/yocto-queue/readme.md
 =======
 >>>>>>> test/path-coverage-automation
 >>>>>>> feature/ecommerce-api
+
+# Mochawesome test reports (generated)
+test/reports/
