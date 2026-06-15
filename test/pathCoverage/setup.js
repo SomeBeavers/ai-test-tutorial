@@ -48,6 +48,14 @@ function waitForServer(url, timeoutMs = 15000, intervalMs = 250) {
 }
 
 async function startServer() {
+  // When the server is managed externally (e.g. started in the background by
+  // the CI pipeline), skip spawning our own process and simply wait for the
+  // already-running API to answer its healthcheck.
+  if (process.env.START_SERVER === 'false') {
+    await waitForServer(BASE_URL);
+    return;
+  }
+
   serverProcess = spawn(process.execPath, [SERVER_ENTRY], {
     env: { ...process.env, PORT: process.env.PORT || '3000' },
     stdio: 'inherit',
