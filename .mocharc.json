@@ -1,5 +1,5 @@
 {
-  "spec": "test/**/*.test.js",
+  "spec": "test/pathCoverage/**/*.test.js",
   "reporter": "mochawesome",
   "reporter-option": [
     "reportDir=test/reports",
