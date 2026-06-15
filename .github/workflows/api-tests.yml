@@ -1,0 +1,72 @@
+name: API Tests
+
+# Run the API test automation whenever a pull request targets main, and again
+# on push to main when the pull request is merged.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  api-tests:
+    name: Path coverage tests
+    runs-on: ubuntu-latest
+
+    env:
+      PORT: '3000'
+      BASE_URL: 'http://localhost:3000'
+      # The pipeline manages the API lifecycle itself (started in the background
+      # below), so the test setup must not spawn a second server instance.
+      START_SERVER: 'false'
+
+    steps:
+      # 1. Clone repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 2. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 3. Run the API in the background
+      - name: Start API in background
+        run: |
+          nohup npm start > server.log 2>&1 &
+          echo "API_PID=$!" >> "$GITHUB_ENV"
+
+      # 4. Wait until the API is running (via the healthcheck endpoint)
+      - name: Wait for API healthcheck
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf "$BASE_URL/api/healthcheck" > /dev/null; then
+              echo "API is up after $i attempt(s)."
+              exit 0
+            fi
+            echo "Waiting for API to be ready... attempt $i/30"
+            sleep 2
+          done
+          echo "API did not become healthy in time. Server log:"
+          cat server.log || true
+          exit 1
+
+      # 5. Run the test scripts
+      - name: Run API tests
+        run: npm test
+
+      - name: Stop API
+        if: always()
+        run: kill "$API_PID" 2>/dev/null || true
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochawesome-report
+          path: test/reports/
+          if-no-files-found: ignore
