@@ -1,0 +1,12 @@
+{
+  "spec": "test/**/*.test.js",
+  "reporter": "mochawesome",
+  "reporter-option": [
+    "reportDir=test/reports",
+    "reportFilename=path-coverage",
+    "reportTitle=Path Coverage - E-Commerce REST API",
+    "quiet=true"
+  ],
+  "timeout": 20000,
+  "exit": true
+}
