@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+node_modules/
+.env
+*.log
+=======
+>>>>>>> feature/ecommerce-api
 node_modules/.package-lock.json
 node_modules/.bin/_mocha
 node_modules/.bin/_mocha.cmd
@@ -1867,3 +1875,7 @@ node_modules/yocto-queue/index.js
 node_modules/yocto-queue/license
 node_modules/yocto-queue/package.json
 node_modules/yocto-queue/readme.md
+<<<<<<< HEAD
+=======
+>>>>>>> test/path-coverage-automation
+>>>>>>> feature/ecommerce-api
