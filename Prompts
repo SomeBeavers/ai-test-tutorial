@@ -1,0 +1,113 @@
+[Prompts]
+
+Prompt #1: Creating the Rest API
+
+1. Goal
+Create a Rest API for my e-commerce using Javascript and Express to allow the consumer to login to get a JWT token and perform a checkout.
+
+2. Context
+2.1.The checkout has the following rules: a) The checkout accepts only cash or credit card, b) Cash gives 10% discount, and c) Only authenticated users can do checkout.
+
+3. Rules
+3.1. Create a new branch based on main
+3.2. This API should have only 4 endpoints: a) login, b) register, c) checkout, and d) healthcheck
+3.3. This API should have a clear organization with Routes, Middleware, Controller, Service, and Model under the src folder.
+3.4. This API should have users and products to help to implement the rules.
+3.5. No test automation script should be added.
+3.6. Everything should run on memory, no databases will be created.
+3.7. The API models should start with 3 users and 3 products.
+3.8. A README.md should be created to document the project and it should include: Description, Installation, How to Run, Rules, Existent Data, and How to Use the Rest API.
+3.9. Create a Swagger file to describe this API and save the file in the root. Then, implement a endpoint in the API to render the Swagger file.
+3.10. Stage the files, commit, and push the code to the branch.
+
+
+Prompt #2: Defining what to test based on Business Rules and Swagger
+
+1. Goal
+List what tests should be done when applying equivalence partitioning for the 10% Discount Rule for Cash Payments.
+
+2. Context
+2.1. The checkout discount rules is listed on the README.md
+2.2. Equivalence partitioning is a test design technique that follows the following algorithm: 1) read the business rule, 2) identify input variables in the business rule, 3) for each input variable, map the possible value ranges a.k.a. equivalence partitioning, 4) select one value randomly for each equivalence partitioning to be the input for the test case, and 5) define the expected result to that input based on the business rule.
+
+3. Rules
+3.1. Do not apply other test design techniques (e.g., Boundary Analysis)
+3.2. Use the Swagger file to define how the request and assert should be.
+3.3. Use valid test data got from the README.md file to define the test cases.
+
+4. Format
+4.1. Tabular, with the columns: Test Case ID, cURL Request, Expected Response Status Code and Assertions for the Response (property and value).
+4.2. Present curl in one line and the assertions as a list (presented as plain text).
+
+Prompt #3: Implementing functional test automation with Mocha, Chai and Supertest based on Swagger
+
+1. Goal
+Implement Rest API Test Automation for Path Coverage using Mocha, Supertest, and Chai.
+
+2. Context
+2.1. The API interface is stored in the Swagger file
+2.2. Path Coverage measures the coverage of a test suite according to the paths it exercises. The coverage is computed as the number of paths executed divided by the total number of paths of the API. To achieve 100% path coverage, at least one request must address each path of the API. For instance, if the API exposes four paths, so just four tests are needed, only one per path, to reach 100% path coverage. 
+
+3. Rules
+3.1. Create a new branch based on main
+3.2. Use valid test data got from the README.md file to define the test cases.
+3.3. Create a folder called “test” to store the tests and a sub-folder called pathCoverage to stores the test files.
+3.4. Prepare the package.json to have a command to run the tests
+3.5. Use Mochawesome to generate test execution reports
+3.6. Run Supertest against the HTTP instead of require and pointing to the app
+3.7. Execute the test automation generated before to consider it done
+3.8. Stage the files, commit, and push the code to the branch.
+
+Prompt #4: Implement test automation execution on the Github Actions pipeline
+
+1. Goal
+Implement API test automation execution on the Github Actions pipeline
+
+2. Context
+2.1. The NPM execution scripts are already declared inside the package.json file
+2.2. A health check endpoint was implemented to help to check if the API is running properly before running the tests
+
+3. Rules
+3.1. Create a new branch based on main
+3.2. Use the API health check to check if the API is on and if the tests can be run
+3.3. The pipeline should run when trying to merge or pull request to the main branch
+3.4. The pipeline should have the following steps: clone repository, run npm install, run the API in background, wait until the API is running, and run the tests scripts.
+3.5. Stage the files, commit, and push the code to the branch.
+
+Prompt #5: Implement load test automation scripts using K6
+
+1. Goal
+Implement load test automation scripts to the Login Endpoint using K6 
+
+2. Context
+2.1. The API interface is stored in the Swagger file
+2.2. The test data to do the login is on the README file
+2.3. A threshold of 500ms is defined to the Percentile 95 for 30 Virtual Users for 30s
+2.4. The stages should be organized as 10 users in the first 5s, 30 users in the next 20s, and 0 users after 5s.
+2.5. K6 is already installed.
+
+3. Rules
+3.1. Create a new branch based on main
+3.2. Use valid test data got from the README.md file to define the test cases.
+3.3. Create a folder called loadTesting inside the folder “test” to store the tests scripts.
+3.4. Stage the files, commit, and push the code to the branch.
+
+[Links]
+
+Test Coverage Criteria for RESTful Web APIs
+https://personales.us.es/sergiosegura/files/papers/martin-lopez19-atest.pdf
+
+Bruno's Documentation
+https://docs.usebruno.com/introduction/what-is-bruno
+
+Mocha's Geeting Started Guide
+https://mochajs.org/#getting-started
+
+Supertest's Geeting Started Guide
+https://www.npmjs.com/package/supertest
+
+Chai's Expect Documentation
+https://www.chaijs.com/guide/styles/#expect
+
+k6's Documentation
+https://grafana.com/docs/k6/latest/
